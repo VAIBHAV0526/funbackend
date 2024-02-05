@@ -1,8 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv'
 const app = express()
+import dbconnect from './db/index.js'
 dotenv.config()
 
+dbconnect();
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
