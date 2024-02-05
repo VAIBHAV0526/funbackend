@@ -1,16 +1,11 @@
-import express from 'express'
+import app from './app.js'
 import dotenv from 'dotenv'
-const app = express()
 import dbconnect from './db/index.js'
 dotenv.config()
 
-dbconnect();
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+dbconnect().then(()=>{
+  app.listen(process.env.PORT, () => {
+    console.log(`Example app listening on port ${process.env.PORT}! `)
+  })
 })
-app.get("/about",(req,res)=>{
-    res.send("<h1>this is about<h1>")
-})
-app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}! `)
-})
+.catch((err)=>{console.log('Error in DB connection',err);})
