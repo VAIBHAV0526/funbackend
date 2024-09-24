@@ -1,0 +1,25 @@
+name: Validate Pull Request
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Make API Call
+        id: api_call
+        run: |
+          RESPONSE=$(curl -s -o /dev/null -w www.google.com
+          echo "Response code: $RESPONSE"
+          if [ "$RESPONSE" -ne 200 ]; then
+            echo "API call failed with status $RESPONSE. Breaking the merge."
+            exit 1
+          else
+            echo "API call succeeded."
+          fi
