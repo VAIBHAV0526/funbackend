@@ -15,7 +15,7 @@ jobs:
       - name: Make API Call
         id: api_call
         run: |
-          RESPONSE=$(curl -s -o /dev/null -w www.google.com
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://www.google.com)
           echo "Response code: $RESPONSE"
           if [ "$RESPONSE" -ne 200 ]; then
             echo "API call failed with status $RESPONSE. Breaking the merge."
